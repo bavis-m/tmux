@@ -33,8 +33,8 @@ const struct cmd_entry cmd_send_keys_entry = {
 	.name = "send-keys",
 	.alias = "send",
 
-	.args = { "FHlMN:Rt:X", 0, -1 },
-	.usage = "[-FHlMRX] [-N repeat-count] " CMD_TARGET_PANE_USAGE
+	.args = { "KFHlMN:Rt:X", 0, -1 },
+	.usage = "[-KFHlMRX] [-N repeat-count] " CMD_TARGET_PANE_USAGE
 	         " key ...",
 
 	.target = { 't', CMD_FIND_PANE, 0 },
@@ -184,6 +184,16 @@ cmd_send_keys_exec(struct cmd *self, struct cmdq_item *item)
 			return (CMD_RETURN_ERROR);
 		}
 		window_pane_key(wp, tc, s, wl, m->key, m);
+		return (CMD_RETURN_NORMAL);
+	}
+
+	if (args_has(args, 'K')) {
+		if (event->key == KEYC_NONE || event->key == KEYC_UNKNOWN)
+		{
+			cmdq_error(item, "no key press event");
+			return (CMD_RETURN_ERROR);
+		}
+		cmd_send_keys_inject_key(item, item, event->key);
 		return (CMD_RETURN_NORMAL);
 	}
 
