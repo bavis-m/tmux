@@ -798,7 +798,7 @@ options_scope_from_name(struct args *args, int window,
 		scope = OPTIONS_TABLE_SERVER;
 		break;
 	case OPTIONS_TABLE_SESSION:
-		if (args_has(args, 'g')) {
+		if (args_has(args, 'g') || (args_has(args, 'G') && options_get_number(s->options == NULL ? global_s_options : s->options, "force-session-options-global"))) {
 			*oo = global_s_options;
 			scope = OPTIONS_TABLE_SESSION;
 		} else if (s == NULL && target != NULL)
@@ -824,7 +824,7 @@ options_scope_from_name(struct args *args, int window,
 		}
 		/* FALLTHROUGH */
 	case OPTIONS_TABLE_WINDOW:
-		if (args_has(args, 'g')) {
+		if (args_has(args, 'g') || (args_has(args, 'G') && options_get_number(s->options == NULL ? global_s_options : s->options, "force-window-options-global"))) {
 			*oo = global_w_options;
 			scope = OPTIONS_TABLE_WINDOW;
 		} else if (wl == NULL && target != NULL)

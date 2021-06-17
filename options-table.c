@@ -1093,6 +1093,22 @@ const struct options_table_entry options_table[] = {
 		  "bottom."
 	},
 
+	{ .name = "force-session-options-global",
+	  .type = OPTIONS_TABLE_FLAG,
+	  .scope = OPTIONS_TABLE_SESSION,
+	  .default_num = 0,
+	  .text = "Whether session options set with -G are "
+		  "global or session-specific."
+	},
+
+	{ .name = "force-window-options-global",
+	  .type = OPTIONS_TABLE_FLAG,
+	  .scope = OPTIONS_TABLE_SESSION,
+	  .default_num = 0,
+	  .text = "Whether window options set with -G are "
+		  "global or window-specific."
+	},
+
 	{ .name = "xterm-keys", /* no longer used */
 	  .type = OPTIONS_TABLE_FLAG,
 	  .scope = OPTIONS_TABLE_WINDOW,
